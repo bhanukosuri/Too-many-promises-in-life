@@ -33,16 +33,20 @@ function deletePost(post) {
 
 
 async function userPosts() {
-    const user = { name: "John", lastActivityTime: null, posts: [] }
-    const post = await createPost("Hello World")
-    user.posts.push(post)
-    const lastActivityTime = await updateLastUserActivityTime(user)
-    console.log("All posts created:");
-    console.log(user.posts);
-    const deletedPost = await deletePost(user.posts[user.posts.length - 1])
-    const updatedPosts = user.posts.filter((post) => post !== deletedPost);
-    console.log("New set of posts:");
-    console.log(updatedPosts);
+    try {
+        const user = { name: "John", lastActivityTime: null, posts: [] }
+        const post = await createPost("Hello World")
+        user.posts.push(post)
+        const lastActivityTime = await updateLastUserActivityTime(user)
+        console.log("All posts created:");
+        console.log(user.posts);
+        const deletedPost = await deletePost(user.posts[user.posts.length - 1])
+        const updatedPosts = user.posts.filter((post) => post !== deletedPost);
+        console.log("New set of posts:");
+        console.log(updatedPosts);
+    } catch (err) {
+        console.log(err)
+    }
 }
 
 userPosts()
