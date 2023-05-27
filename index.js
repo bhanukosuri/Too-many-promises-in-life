@@ -1,3 +1,4 @@
+
 function createPost(post) {
     // return a promise that resolves after 1 second with the created post
     return new Promise((resolve, reject) => {
@@ -8,7 +9,7 @@ function createPost(post) {
     });
 }
 
-   
+
 function updateLastUserActivityTime(user) {
     // return a promise that resolves after 1 second with the updated user object
     return new Promise((resolve, reject) => {
@@ -30,21 +31,18 @@ function deletePost(post) {
     });
 }
 
-// usage example
-const user = { name: "John", lastActivityTime: null, posts: [] };
-createPost("Hello world")
-.then((post) => {
-    user.posts.push(post);
-    return updateLastUserActivityTime(user);
-})
-.then((updatedUser) => {
+
+async function userPosts() {
+    const user = { name: "John", lastActivityTime: null, posts: [] }
+    const post = await createPost("Hello World")
+    user.posts.push(post)
+    const lastActivityTime = await updateLastUserActivityTime(user)
     console.log("All posts created:");
-    console.log(updatedUser.posts);
-    return deletePost(updatedUser.posts[updatedUser.posts.length - 1]);
-})
-.then((deletedPost) => {
+    console.log(user.posts);
+    const deletedPost = await deletePost(user.posts[user.posts.length - 1])
     const updatedPosts = user.posts.filter((post) => post !== deletedPost);
     console.log("New set of posts:");
     console.log(updatedPosts);
-})
-.catch((error) => console.error(error));
+}
+
+userPosts()
